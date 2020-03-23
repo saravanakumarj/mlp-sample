@@ -17,5 +17,21 @@
   </dependencies>
   <build>
     <finalName>mlp-test-spinnaker</finalName>
+    <!-- Optional - for hot reload of the web application when using an IDE Eclipse / IDEA -->
+    <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/classes
+    </outputDirectory>
+    <plugins>
+
+      <plugin>
+        <groupId>com.google.cloud.tools</groupId>
+        <artifactId>jib-maven-plugin</artifactId>
+        <version>2.0.0</version>
+        <configuration>
+          <to>
+            <image>gcr.io/direct-return-269313/testspin</image>
+          </to>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
 </project>
