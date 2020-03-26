@@ -2,19 +2,25 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('Docker Build') {
             steps {
-                echo 'Building..'
+                sh """
+				   cd mlp-test-spinnaker;
+				   docker build -t mlp-test-spinnaker . ;
+				   """ 
             }
         }
-        stage('Test') {
+        stage('Docker Push') {
             steps {
-                echo 'Testing..'
+				sh """
+				   docker tag  mlp-test-spinnaker gcr.io/big-data-poc-216405/mlp-test-spinnaker:v${BUILD_NUMBER} ;
+				   docker push gcr.io/big-data-poc-216405/mlp-test-spinnaker:v${BUILD_NUMBER} ;
+				   """
             }
         }
-        stage('Deploy') {
+        stage('Completed') {
             steps {
-                echo 'Deploying....'
+                echo 'Completed....'
             }
         }
     }
