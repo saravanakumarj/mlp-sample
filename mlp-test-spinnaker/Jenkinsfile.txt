@@ -2,10 +2,18 @@ pipeline {
     agent any
 
     stages {
-        stage('Docker Build') {
+		stage('Maven Build') {
             steps {
                 sh """
 				   cd mlp-test-spinnaker;
+				   mvn clean compile install  -Dmaven.test.skip=true -DSkiptests=true -f pom.xml ;
+				   docker build -t mlp-test-spinnaker . ;
+				   """ 
+            }
+        }
+        stage('Docker Build') {
+            steps {
+                sh """
 				   docker build -t mlp-test-spinnaker . ;
 				   """ 
             }
